@@ -4,12 +4,12 @@ const UserSchema = new Schema({
     username: {
         type: String,
         unique: true,
-        required: true,
+        required: "A usename is required!",
         trim: true
     },
     email: {
         type: String,
-        required: true,
+        required: "An email is required!",
         unique: true,
         validate: {
             validator: function (v) {
@@ -18,8 +18,22 @@ const UserSchema = new Schema({
             message: "Please enter a valid email"
         }
     },
-    thoughts: [],
+    thoughts: [
+        
+    ],
     friends: []
+},
+    {
+        toJSON: {
+            virtuals: true,
+            getters: true
+        },
+        id: false
+    }
+);
+
+UserSchema.virtual('thoughtCount').get(function () {
+    return this.thoughts.reduce((total, thought) => total + thought.replies.length + 1, 0);
 });
 
 const User = model('User', UserSchema);
