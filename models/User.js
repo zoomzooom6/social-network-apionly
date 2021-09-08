@@ -18,8 +18,18 @@ const UserSchema = new Schema({
             message: "Please enter a valid email"
         }
     },
-    thoughts: [],
-    friends: []
+    thoughts: [ 
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'Thought'
+        }
+    ],
+    friends: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'User'
+        }
+    ]
 },
     {
         toJSON: {
@@ -30,8 +40,8 @@ const UserSchema = new Schema({
     }
 );
 
-UserSchema.virtual('thoughtCount').get(function () {
-    return this.thoughts.reduce((total, thought) => total + thought.replies.length + 1, 0);
+UserSchema.virtual('thoughtCount').get(function() {
+    return this.thoughts.length;
 });
 
 const User = model('User', UserSchema);

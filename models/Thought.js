@@ -1,6 +1,25 @@
 const { Schema, model } = require('mongoose');
 const dateFormat = require('../utils/dateFormat');
 
+const ReactSchema = new Schema({
+    reactionId: {
+        type: Schema.Types.ObjectId
+    },
+    reactionBody: {
+        type: String,
+        required: "Reaction text is required!"
+    },
+    username: {
+        type: String,
+        required: "username is required!"
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now,
+        get: (createdAtVal) => dateFormat(createdAtVal)
+    }
+});
+
 const ThoughtSchema = new Schema({
     thoughtText: {
         type: String,
@@ -15,11 +34,21 @@ const ThoughtSchema = new Schema({
     },
     username: {
         type: String,
-        ref: {
-            model: 'User',
-            key: 'username'
-        }
+        required: true
+    },
+    reactions: [ReactSchema]
+},
+    {
+        toJSON: {
+            virtuals: true,
+            getters: true
+        },
+        id: false
     }
+);
+
+ThoughtSchema.virtual('reactCount').get(function() {
+    return this.reactions.length;
 })
 
 const Thought = model('Thought', ThoughtSchema);
