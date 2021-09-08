@@ -34,7 +34,7 @@ Designed by Tony Huang. <a href='https://github.com/zoomzooom6'>GitHub Profile</
 Video walkthrough of API functions testing using Insomia Core <a href=''>YouTube Link</a>
 
 ## Final Results
-<img src='' alt='User creation Response' />
+<img src='' alt='User creation response' />
 
 <img src='' alt='Thought creation response' />
 
