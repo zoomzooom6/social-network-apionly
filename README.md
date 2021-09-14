@@ -31,13 +31,13 @@ Designed by Tony Huang. <a href='https://github.com/zoomzooom6'>GitHub Profile</
 
 
 ### Walkthrough
-Video walkthrough of API functions testing using Insomia Core <a href=''>YouTube Link</a>
+Video walkthrough of API functions testing using Insomia Core <a href='https://youtu.be/MfymZZ1P-RI'>YouTube Link</a>
 
 ## Final Results
-<img src='' alt='User creation response' />
+<img src='./assets/images/UserCreation.jpg' alt='User creation response' />
 
-<img src='' alt='Thought creation response' />
+<img src='./assets/images/ThoughtCreation.jpg' alt='Thought creation response' />
 
-<img src='' alt='Thought delete response' />
+<img src='./assets/images/ThoughtDeletion.jpg' alt='Thought delete response' />
 
-<img src='' alt='Reaction to thought response ' />
+<img src='./assets/images/AddReaction.jpg' alt='Reaction to thought response ' />

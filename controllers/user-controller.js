@@ -4,6 +4,7 @@ const userController = {
     //GET all users
     getAllUser(req, res) {
         User.find({})
+            .sort({'createdAt': 'descending'})
             .then(dbUserData => res.json(dbUserData))
             .catch(err => { res.status(400).json(err) });
     },
@@ -54,17 +55,11 @@ const userController = {
     },
 
     addFriend({ params }, res) {
-        User.findOneAndUpdate({ _id: params.userId })
-            .then(dbUserData => {
-                if (!dbUserData) {
-                    return res.status(404).json({ message: 'No user found with this id!' });
-                }
-                return User.findOneAndUpdate(
-                    { _id: params.userId },
-                    { $push: { friends: params.friendId } },
-                    { new: true }
-                );
-            })
+        User.findOneAndUpdate(
+            { _id: params.userId },
+            { $push: { friends: params.friendId } },
+            { new: true, runValidators: true }
+        )
             .then(dbUserData => {
                 if (!dbUserData) {
                     res.status(404).json({ message: "No user found with this id!" });
@@ -76,24 +71,12 @@ const userController = {
     },
 
     removeFriend({ params }, res) {
-        User.findOneAndUpdate({ _id: params.userId })
-            .then(dbUserData => {
-                if (!dbUserData) {
-                    return res.status(404).json({ message: 'No user found with this id!' });
-                }
-                return User.findOneAndUpdate(
-                    { _id: params.userId },
-                    { $pull: { friends: params.friendId } },
-                    { new: true }
-                );
-            })
-            .then(dbUserData => {
-                if (!dbUserData) {
-                    res.status(404).json({ message: "No user found with this id!" });
-                    return;
-                }
-                res.json(dbUserData);
-            })
+        User.findOneAndUpdate(
+            { _id: params.userId },
+            { $pull: { friends: params.friendId } },
+            { new: true }
+            )
+            .then(dbUserData => res.json(dbUserData))
             .catch(err => { res.json(400).json(err) });
     }
 };
